@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -33,7 +34,7 @@ Route::controller(FrontendController::class)->group(function() {
     Route::get('/collections/{category_slug}', 'products');
     Route::get('/collections/{category_slug}/{product_slug}', 'productView');
     Route::get('/arrivals', 'newArrivals');
-    Route::get('/featurd','featuredProduct');
+    Route::get('/featured','featuredProduct');
 });
 Route::match(['get', 'post'], '/botman', [BotManController::class, 'index']);
 
@@ -58,7 +59,9 @@ Route::get('/thank-you', [FrontendController::class, 'thankyou']);
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
-
+   
+    Route::get('/setting',[SettingController::class,'index']);
+    Route::post('/store',[SettingController::class,'store']);
     //category routes
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/category', 'index');

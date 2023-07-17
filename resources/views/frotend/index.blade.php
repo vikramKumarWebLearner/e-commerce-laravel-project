@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <div class="py-5 bg-white">
+    <div class="py-5 ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 ">
@@ -111,6 +111,127 @@
             </div>
         </div>
     </div>
+
+
+    <div class="py-5 bg-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 ">
+                    <h4>New Arrival Products
+                        <a href="{{ url('arrivals') }}" class="btn btn-warning float-end">View More</a>
+                    </h4>
+                    <div class="underline"></div>
+
+                    <div class="col-md-12" wire:ingonre>
+                        <div class="owl-carousel owl-theme trending-product">
+                            @if ($newArrivalProducts)
+                                @foreach ($newArrivalProducts as $productsitem)
+                                    <div class="item">
+                                        <div class="trending-product">
+                                            <div class="product-card">
+                                                <div class="product-card-img">
+                                                    @if ($productsitem->productImage->count() > 0)
+                                                        <a
+                                                            href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                            <img src="{{ asset($productsitem->productImage[0]->image) }}"
+                                                                alt="{{ $productsitem->name }}">
+                                                        </a>
+                                                    @endif
+
+                                                </div>
+                                                <div class="product-card-body">
+                                                    <p class="product-brand">{{ $productsitem->brand }}</p>
+                                                    <h5 class="product-name">
+                                                        <a
+                                                            href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                            {{ $productsitem->name }}
+                                                        </a>
+                                                    </h5>
+                                                    <div>
+                                                        <span
+                                                            class="selling-price">{{ $productsitem->selling_price }}</span>
+                                                        <span
+                                                            class="original-price">{{ $productsitem->original_price }}</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="col-md-12">
+                                    <div class="p-2">
+                                        <h5>No Arrivals Products</h5>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 ">
+                    <h4>New featured Products
+                        <a href="{{ url('featured') }}" class="btn btn-warning float-end">View More</a>
+                    </h4>
+                    <div class="underline"></div>
+
+                    <div class="col-md-12" wire:ingonre>
+                        <div class="owl-carousel owl-theme trending-product">
+                            @if ($featuredProducts)
+                                @foreach ($featuredProducts as $productsitem)
+                                    <div class="item">
+                                        <div class="trending-product">
+                                            <div class="product-card">
+                                                <div class="product-card-img">
+                                                    @if ($productsitem->productImage->count() > 0)
+                                                        <a
+                                                            href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                            <img src="{{ asset($productsitem->productImage[0]->image) }}"
+                                                                alt="{{ $productsitem->name }}">
+                                                        </a>
+                                                    @endif
+
+                                                </div>
+                                                <div class="product-card-body">
+                                                    <p class="product-brand">{{ $productsitem->brand }}</p>
+                                                    <h5 class="product-name">
+                                                        <a
+                                                            href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                            {{ $productsitem->name }}
+                                                        </a>
+                                                    </h5>
+                                                    <div>
+                                                        <span
+                                                            class="selling-price">{{ $productsitem->selling_price }}</span>
+                                                        <span
+                                                            class="original-price">{{ $productsitem->original_price }}</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="col-md-12">
+                                    <div class="p-2">
+                                        <h5>No Featured Products</h5>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
@@ -119,13 +240,14 @@
         $('.trending-product').owlCarousel({
             loop: true,
             margin: 10,
-            nav: true,
+            dots: false,
+            nav: false,
             responsive: {
                 0: {
                     items: 1
                 },
                 600: {
-                    items: 3
+                    items: 1
                 },
                 1000: {
                     items: 2

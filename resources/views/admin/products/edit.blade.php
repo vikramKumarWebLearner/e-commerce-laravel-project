@@ -11,16 +11,16 @@
                     </h3>
                 </div>
                 <div class="card-body border">
-                  @if (session('message'))
-                  <h2 class="alert alert-success">{{ session('message')}}</h2>
-                  @endif
-                  @if ($errors->any())
-                      <div class="alert alert-warning">
-                        @foreach ($errors->all() as $error)
-                            <div>{{$error}}</div>
-                        @endforeach
-                      </div>
-                  @endif
+                    @if (session('message'))
+                        <h2 class="alert alert-success">{{ session('message') }}</h2>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-warning">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                     <form action="{{ url('admin/product/' . $product->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -152,6 +152,13 @@
                                                 class="form-check-input" {{ $product->trending == '1' ? 'checked' : '' }}>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="featured">Featured</label>
+                                            <input type="checkbox" name="featured" id="featured"
+                                                {{ $product->featured == '1' ? 'checked' : '' }}>
+                                        </div>
+                                    </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="status m-2">Status</label>
@@ -161,7 +168,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="productImage-tab-pane" role="tabpanel" aria-labelledby="productImage-tab" tabindex="0">
+                            <div class="tab-pane fade" id="productImage-tab-pane" role="tabpanel"
+                                aria-labelledby="productImage-tab" tabindex="0">
                                 <div class="row mt-3">
                                     <div class="col-md-12">
                                         <div class="mb-3">
@@ -172,48 +180,52 @@
                                     </div>
                                 </div>
                                 <div class="container-fluid">
-                                  <div class="row row-cols-1 row-cols-md-4  mt-3">
-                                    @if ($product->productImage)
-                                        @foreach ($product->productImage as $image)
+                                    <div class="row row-cols-1 row-cols-md-4  mt-3">
+                                        @if ($product->productImage)
+                                            @foreach ($product->productImage as $image)
                                                 <div class="col m-1">
                                                     <div class="card">
-                                                        <img src="{{ url($image->image) }}" class="card-img-top" alt="image not found">
-                                                       <div class="card-body">
-                                                            <h5 class="card-title">{{$product->name}}</h5>
-                                                            <a href="{{url('admin/product_image/'.$image->id.'/delete')}}" class="btn btn-sm btn-dark">Remove</a>
+                                                        <img src="{{ url($image->image) }}" class="card-img-top"
+                                                            alt="image not found">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{ $product->name }}</h5>
+                                                            <a href="{{ url('admin/product_image/' . $image->id . '/delete') }}"
+                                                                class="btn btn-sm btn-dark">Remove</a>
                                                         </div>
                                                     </div>
                                                 </div>
-    
-                                            
-                                        @endforeach
-                                    @else
-                                        <h5>No Image Added</h5>
-                                    @endif
-                                  </div>
+                                            @endforeach
+                                        @else
+                                            <h5>No Image Added</h5>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="color-tab-pane" role="tabpanel" aria-labelledby="color-tab" tabindex="0">
+                            <div class="tab-pane fade" id="color-tab-pane" role="tabpanel" aria-labelledby="color-tab"
+                                tabindex="0">
                                 <div class=" m-3 ">
                                     <div class="row ">
-                                      <label for="color mb-3">Select Color</label>
-                                      @forelse ($colors as $colorItem)
-                                      <div class="col-md-3">
-                                         <div class="p-2 border mb-3">
-                                          Color: <input type="checkbox" name="colors[{{$colorItem->id}}]" value="{{$colorItem->id}}" />
-                                          {{$colorItem->name}}
-                                          <br>
-                                          Quantity: <input type="number" name="colorquantity[{{$colorItem->id}}]" id="" style="width:70px; border:1px solid;">
-                                         </div>
-                                      </div> 
-                                      @empty
-                                          <div class="col-md-3">
-                                            <h1>No Color Found</h1>
-                                          </div>
-                                      @endforelse
+                                        <label for="color mb-3">Select Color</label>
+                                        @forelse ($colors as $colorItem)
+                                            <div class="col-md-3">
+                                                <div class="p-2 border mb-3">
+                                                    Color: <input type="checkbox" name="colors[{{ $colorItem->id }}]"
+                                                        value="{{ $colorItem->id }}" />
+                                                    {{ $colorItem->name }}
+                                                    <br>
+                                                    Quantity: <input type="number"
+                                                        name="colorquantity[{{ $colorItem->id }}]" id=""
+                                                        style="width:70px; border:1px solid;">
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-md-3">
+                                                <h1>No Color Found</h1>
+                                            </div>
+                                        @endforelse
                                     </div>
-                                  </div>
-                                  <div class="table-responsive mb-2">
+                                </div>
+                                <div class="table-responsive mb-2">
                                     <table class="table table-bordered table-sm">
                                         <thead>
                                             <tr>
@@ -224,22 +236,26 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($product->productColor as $productColor)
-                                            <tr class="prod-color-tr">
-                                                <td>{{$productColor->color->name}}</td>
-                                                <td>
-                                                    <div class="input-group mb-3 " style="width:150px;">
-                                                     <input type="text" name="" id="" class="productColorQuantity form-control from-control-sm" value="{{$productColor->quantity}}">
-                                                     <button type="button" value="{{$productColor->id}}" class="updateColorBtn btn btn-sm btn-primary btn-sm text-white">Update</button>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <button type="button" value="{{$productColor->id}}" class="deleteColorBtn btn btn-sm btn-danger btn-sm text-white">Deleate</button>
-                                                </td>
-                                            </tr>
+                                                <tr class="prod-color-tr">
+                                                    <td>{{ $productColor->color->name }}</td>
+                                                    <td>
+                                                        <div class="input-group mb-3 " style="width:150px;">
+                                                            <input type="text" name="" id=""
+                                                                class="productColorQuantity form-control from-control-sm"
+                                                                value="{{ $productColor->quantity }}">
+                                                            <button type="button" value="{{ $productColor->id }}"
+                                                                class="updateColorBtn btn btn-sm btn-primary btn-sm text-white">Update</button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" value="{{ $productColor->id }}"
+                                                            class="deleteColorBtn btn btn-sm btn-danger btn-sm text-white">Deleate</button>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -254,58 +270,55 @@
 
 
 @section('script')
-     
-<script>
-    $(document).ready(function(){
-        $.ajaxSetup({
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-         });
-        $(document).on('click', ".updateColorBtn", function(){
-            var product_id = "{{$product->id}}";
-            var prod_color_id = $(this).val();
-            var quantity = $(this).closest('.prod-color-tr').find('.productColorQuantity').val();
-
-            if(quantity <= 0)
-            {
-                alert('Quantity is required');
-                return false;
-            }
-
-            var data = {
-                  'product_id' : product_id,
-                  'quantity' : quantity
-            };
-
-             $.ajax({
-                type:'POST',
-                 url:'/admin/product-color/'+prod_color_id,
-                 data:data,
-                 success:function(response){
-                    alert(response.message);
-                 }
-             })
-
-        });
-
-        $(document).on('click', '.deleteColorBtn', function(){
-            var prod_color_id = $(this).val();
-            var thisClick = $(this);
-           
-            $.ajax({
-                type:'GET',
-                url:'/admin/product_color/'+prod_color_id+'/delete',
-                success:function(response){
-                    thisClick.closest('.prod-color-tr').remove();
-                    alert(response.message);
-                      
-                }
             });
-           
+            $(document).on('click', ".updateColorBtn", function() {
+                var product_id = "{{ $product->id }}";
+                var prod_color_id = $(this).val();
+                var quantity = $(this).closest('.prod-color-tr').find('.productColorQuantity').val();
+
+                if (quantity <= 0) {
+                    alert('Quantity is required');
+                    return false;
+                }
+
+                var data = {
+                    'product_id': product_id,
+                    'quantity': quantity
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/product-color/' + prod_color_id,
+                    data: data,
+                    success: function(response) {
+                        alert(response.message);
+                    }
+                })
+
+            });
+
+            $(document).on('click', '.deleteColorBtn', function() {
+                var prod_color_id = $(this).val();
+                var thisClick = $(this);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/admin/product_color/' + prod_color_id + '/delete',
+                    success: function(response) {
+                        thisClick.closest('.prod-color-tr').remove();
+                        alert(response.message);
+
+                    }
+                });
+
+            });
+
         });
-
-    });
-
-</script>
+    </script>
 @endsection

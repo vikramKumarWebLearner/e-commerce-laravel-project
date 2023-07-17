@@ -45,6 +45,8 @@
         <main>
             @yield('content')
         </main>
+
+        @include('layouts.inculde.frotend.footer')
     </div>
 
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js') }}"></script>

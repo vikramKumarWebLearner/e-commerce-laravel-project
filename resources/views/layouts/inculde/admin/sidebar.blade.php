@@ -67,8 +67,8 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{}}">
-                <i class="mdi mdi-cog menu-icon"></i>
+            <a class="nav-link" href="{{ url('admin/setting') }}">
+                <i class="mdi mdi-settings menu-icon"></i>
                 <span class="menu-title">Site Setting</span>
             </a>
 

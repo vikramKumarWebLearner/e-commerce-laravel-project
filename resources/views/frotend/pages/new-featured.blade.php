@@ -45,7 +45,7 @@
                     </div>
                 @endforelse
                 <div class="text-center">
-                    <a href="{{ url('/collections') }}" class="btn btn-warning px-4 mt-2">view more</a>
+                    <a href="{{ url('/arrivals') }}" class="btn btn-warning px-4 mt-2">shop more</a>
                 </div>
             </div>
         </div>
