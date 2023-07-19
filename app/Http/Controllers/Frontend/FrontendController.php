@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
@@ -70,5 +71,17 @@ class FrontendController extends Controller
     public function thankyou()
     {
         return view('frotend.thank-you');
+    }
+
+    public function searchProduct(Request $request)
+    {
+       if($request->search){
+          
+          $searchProduct = Product::where('name','LIKE','%'.$request->search.'%')->latest()->paginate(10);
+          return view('frotend.pages.searchbar',compact('searchProduct'));
+       }
+       else{
+             return redirect()->back()->with('message','No Search Product Found');
+        }
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BotManController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SliderController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WhishlistController;
+use App\Http\Controllers\Frontend\UserDetailController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +38,7 @@ Route::controller(FrontendController::class)->group(function() {
     Route::get('/collections/{category_slug}/{product_slug}', 'productView');
     Route::get('/arrivals', 'newArrivals');
     Route::get('/featured','featuredProduct');
+    Route::get('/search','searchProduct');
 });
 Route::match(['get', 'post'], '/botman', [BotManController::class, 'index']);
 
@@ -52,12 +56,16 @@ Route::middleware(['auth'])->group(function () {
     //Order
     Route::get('orders', [OrderController::class, 'index']);
     Route::get('orders/{orderId}', [OrderController::class, 'show']);
+
+    Route::get('/profile',[UserDetailController::class, 'index']);
+    Route::post('/profile',[UserDetailController::class, 'update']);
 });
 
 //thank you page
 Route::get('/thank-you', [FrontendController::class, 'thankyou']);
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+    
     Route::get('/dashboard', [DashboardController::class, 'index']);
    
     Route::get('/setting',[SettingController::class,'index']);
@@ -114,6 +122,17 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{orderId}', [OrderController::class, 'show']);
     Route::put('/orders/{orderid}', [OrderController::class, 'updateStatus']);
+
+    //users
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users','index')->name('index');
+        Route::get('/user/create', 'create');
+        Route::post('/user','store');
+        Route::get('/user/{user_id}/edit', 'edit')->whereNumber('user_id');
+        Route::put('/user/{user_id}','update')->whereNumber('user_id');
+        Route::any('/user/{user_id}/delete','delete');
+    });
+    
 
     //Invoice
     Route::get('/invoice/{orderId}', [OrderController::class, 'viewInvoice']);
