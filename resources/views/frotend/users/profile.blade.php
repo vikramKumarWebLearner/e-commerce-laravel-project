@@ -10,9 +10,12 @@
                 <div class="alert alert-warning">{{ session('message') }}</div>
             @endif
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10">
+                    <a href="{{ url('user-password') }}" class="btn btn-warning float-end">User Password?</a>
                     <h4>User Deatil Update</h4>
                     <div class="underline"></div>
+
+
                 </div>
                 <div class="col-md-10">
                     <div class="card shadow">
