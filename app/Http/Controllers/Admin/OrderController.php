@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Contracts\Database\Query\Builder;
+use App\Mail\InvoiceMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Database\Query\Builder;
 
 class OrderController extends Controller
 {
@@ -72,5 +74,19 @@ class OrderController extends Controller
         $pdf = Pdf::loadView('admin.invoice.gen-invoice', $data);
 
         return $pdf->download('invoice-'.$orderId.'-'.$today_date.'.pdf');
+    }
+
+
+    public function invoiceMail(int $orderId)
+    {
+        try{
+            $order = Order::where('id', $orderId)->firstOrFail();
+            Mail::to("$order->email")->send(new InvoiceMail($order));
+
+            return redirect('admin/orders/'.$order->id)->with('message','user email sent '.$order->email);
+        }
+        catch(\Exception $e){
+            return redirect('admin/orders/'.$order->id)->with('message','user email not sent');
+        }
     }
 }

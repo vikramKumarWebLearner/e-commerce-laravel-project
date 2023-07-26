@@ -121,10 +121,17 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/brands', App\Http\Livewire\Admin\Brand\Index::class);
 
     //orders
-    Route::get('/orders', [OrderController::class, 'index']);
-    Route::get('/orders/{orderId}', [OrderController::class, 'show']);
-    Route::put('/orders/{orderid}', [OrderController::class, 'updateStatus']);
-
+    Route::controller(OrderController::class)->group(function(){
+        Route::get('/orders', 'index');
+        Route::get('/orders/{orderId}', 'show');
+        Route::put('/orders/{orderid}', 'updateStatus');
+    
+        //Invoice
+        Route::get('/invoice/{orderId}', 'viewInvoice');
+        Route::get('/invoice/{orderId}/generateInvoice','generateInvoice');
+        Route::get('/invoice/{orderId}/mail','invoiceMail');
+    });
+   
     //users
     Route::controller(UserController::class)->group(function () {
         Route::get('/users','index')->name('index');
@@ -136,7 +143,5 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     });
     
 
-    //Invoice
-    Route::get('/invoice/{orderId}', [OrderController::class, 'viewInvoice']);
-    Route::get('/invoice/{orderId}/generateInvoice', [OrderController::class, 'generateInvoice']);
+    
 });
