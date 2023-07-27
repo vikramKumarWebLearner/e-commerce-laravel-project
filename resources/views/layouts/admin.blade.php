@@ -28,6 +28,16 @@
 
     {{-- Font icon --}}
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+        .form-control {
+            border: 1px solid #ddd;
+        }
+
+        .sidebar .nav .nav-item.active {
+            background: #e9e9e9;
+        }
+    </style>
     @livewireStyles
 </head>
 
