@@ -52,7 +52,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="{{ url('profile') }}"><i class="fa fa-user"></i>
                                             Profile</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('') }}"><i class="fa fa-list"></i> My
+                                    <li><a class="dropdown-item" href="{{ url('myOrder') }}"><i class="fa fa-list"></i> My
                                             Orders</a>
                                     </li>
                                     <li><a class="dropdown-item" href="{{ url('whishlist') }}"><i class="fa fa-heart"></i>

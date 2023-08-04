@@ -4,9 +4,11 @@ namespace App\Http\Livewire\Frotend\Checkout;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Mail\OrderMail;
+use Livewire\Component;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
-use Livewire\Component;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutShow extends Component
 {
@@ -82,6 +84,13 @@ class CheckoutShow extends Component
             $this->emit('cartAddedOrUpdated');
             Cart::where('user_id', auth()->user()->id)->delete();
 
+            try{
+                $order = Order::findOrfail($codOrder->id);
+                Mail::to("$order->email")->send(new OrderMail($order));
+            }
+            catch(\Exception $e){
+                //error show
+            }
             session()->flash('message', 'Order Successfully');
             $this->dispatchBrowserEvent('message', [
                 'text' => 'Place Order Successfully',

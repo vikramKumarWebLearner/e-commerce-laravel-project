@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
+
+
 @section('title')
-    {{$category->meta_title}}
+    {{ $category->meta_title }}
 @endsection
 
 @section('meta_keyword')
-    {{$category->meta_keyword}}
+    {{ $category->meta_keyword }}
 @endsection
 
 @section('meta_desc')
-    {{$category->meta_title}}
+    {{ $category->meta_title }}
 @endsection
 
 @section('title', 'Product')
@@ -20,7 +22,7 @@
                 <div class="col-md-12">
                     <h4 class="mb-4">Our Products</h4>
                 </div>
-                <livewire:frotend.product.index :category="$category" /> 
+                <livewire:frotend.product.index :category="$category" />
 
             </div>
         </div>

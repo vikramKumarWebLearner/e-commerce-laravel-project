@@ -119,10 +119,136 @@
             </div>
         </div>
     </div>
-</div>
 
+
+
+    <div class="py-3 py-md-5 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>
+                        Related
+                        @if ($category->name)
+                            {{ ucfirst($category->name) }}
+                        @endif
+                        Product
+                    </h4>
+                    <div class="underline"></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme trending-product">
+                        @foreach ($category->relatedProduct as $productsitem)
+                            <div class="item mb-3" wire:ingonre>
+                                <div class="product-card">
+                                    <div class="product-card-img">
+                                        @if ($productsitem->productImage->count() > 0)
+                                            <a
+                                                href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                <img src="{{ asset($productsitem->productImage[0]->image) }}"
+                                                    alt="{{ $productsitem->name }}">
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <div class="product-card-body">
+                                        <p class="product-brand">{{ $productsitem->brand }}</p>
+                                        <h5 class="product-name">
+                                            <a
+                                                href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                {{ $productsitem->name }}
+                                            </a>
+                                        </h5>
+                                        <div>
+                                            <span class="selling-price">{{ $productsitem->selling_price }}</span>
+                                            <span class="original-price">{{ $productsitem->original_price }}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="py-3 py-md-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>
+                        Related
+                        @if ($product->brand)
+                            {{ ucfirst($product->brand) }}
+                        @endif
+                        Product
+                    </h4>
+                    <div class="underline"></div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme trending-product">
+                        @foreach ($category->relatedProduct as $productsitem)
+                            @if ($productsitem->brand == "$product->brand")
+                                <div class="item mb-3" wire:ingonre>
+                                    <div class="product-card">
+                                        <div class="product-card-img">
+                                            @if ($productsitem->productImage->count() > 0)
+                                                <a
+                                                    href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                    <img src="{{ asset($productsitem->productImage[0]->image) }}"
+                                                        alt="{{ $productsitem->name }}">
+                                                </a>
+                                            @endif
+                                        </div>
+                                        <div class="product-card-body">
+                                            <p class="product-brand">{{ $productsitem->brand }}</p>
+                                            <h5 class="product-name">
+                                                <a
+                                                    href="{{ url('/collections/' . $productsitem->category->slug . '/' . $productsitem->slug) }}">
+                                                    {{ $productsitem->name }}
+                                                </a>
+                                            </h5>
+                                            <div>
+                                                <span class="selling-price">{{ $productsitem->selling_price }}</span>
+                                                <span class="original-price">{{ $productsitem->original_price }}</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @push('scripts')
     <script>
+        $('.trending-product').owlCarousel({
+            loop: true,
+            margin: 10,
+            dots: false,
+            nav: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 2
+                }
+
+            }
+        })
         $(function() {
             $("#exzoom").exzoom({
                 // thumbnail nav options

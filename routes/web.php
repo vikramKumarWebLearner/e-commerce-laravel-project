@@ -39,6 +39,7 @@ Route::controller(FrontendController::class)->group(function() {
     Route::get('/arrivals', 'newArrivals');
     Route::get('/featured','featuredProduct');
     Route::get('/search','searchProduct');
+    Route::get('/myOrder','myOrder');
 });
 Route::match(['get', 'post'], '/botman', [BotManController::class, 'index']);
 
@@ -46,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/whishlist', [WhishlistController::class, 'whishlist']);
     Route::get('/cart', [CartController::class, 'index']);
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('frotend.checkout.index');
-
+    
     //pay pal
     Route::get('create-transaction', [PaymentController::class, 'createTransaction'])->name('createTransaction');
     Route::get('process-transaction/{amount}', [PaymentController::class, 'processTransaction'])->name('processTransaction');

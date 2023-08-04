@@ -32,7 +32,7 @@
         </button>
     </div>
 
-    <div class="py-5 ">
+    <div class="py-5 bg-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 text-center">
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <div class="py-5 ">
+    <div class="py-5 bg-white ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 ">
@@ -113,7 +113,7 @@
     </div>
 
 
-    <div class="py-5 bg-white">
+    <div class="py-5 bg-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 ">
@@ -173,7 +173,7 @@
         </div>
     </div>
 
-    <div class="py-5">
+    <div class="py-5 bg-white">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 ">

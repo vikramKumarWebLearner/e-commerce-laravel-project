@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -15,23 +18,25 @@ class FrontendController extends Controller
         $sliders = Slider::where('status', '0')->get();
         $trendingProducts = Product::where('trending', 1)->latest()->take(10)->get();
         $newArrivalProducts = Product::latest()->take(14)->get();
-        $featuredProducts = Product::where('featured','1')->latest()->take(14)->get();
-        return view('frotend.index', compact('sliders', 'trendingProducts','newArrivalProducts','featuredProducts'));
+        $featuredProducts = Product::where('featured', '1')->latest()->take(14)->get();
+
+        return view('frotend.index', compact('sliders', 'trendingProducts', 'newArrivalProducts', 'featuredProducts'));
     }
 
     public function newArrivals()
     {
         $newArrivalProducts = Product::latest()->take(16)->get();
-        
+
         return view('frotend.pages.new-arrival', compact('newArrivalProducts'));
     }
+
     public function featuredProduct()
     {
-        $featuredProduct = Product::where('featured','1')->latest()->get();
-        
+        $featuredProduct = Product::where('featured', '1')->latest()->get();
+
         return view('frotend.pages.new-featured', compact('featuredProduct'));
     }
-    
+
     public function categories()
     {
         $categories = Category::where('status', '0')->get();
@@ -75,13 +80,23 @@ class FrontendController extends Controller
 
     public function searchProduct(Request $request)
     {
-       if($request->search){
-          
-          $searchProduct = Product::where('name','LIKE','%'.$request->search.'%')->latest()->paginate(10);
-          return view('frotend.pages.searchbar',compact('searchProduct'));
-       }
-       else{
-             return redirect()->back()->with('message','No Search Product Found');
+        if ($request->search) {
+
+            $searchProduct = Product::where('name', 'LIKE', '%'.$request->search.'%')->latest()->paginate(10);
+
+            return view('frotend.pages.searchbar', compact('searchProduct'));
+        } else {
+            return redirect()->back()->with('message', 'No Search Product Found');
         }
+    }
+
+    public function myOrder()
+    {
+        $order = Order::where('user_id', Auth::user()->id)->get();
+
+        $order_item = OrderItem::whereIn('order_id', $order->pluck('id')->toArray())->with('product')->get()->toArray();
+
+        return view('', compact($order_item));
+
     }
 }
