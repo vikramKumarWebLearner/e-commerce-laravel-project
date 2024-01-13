@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Setting;
 use App\Models\User;
+use Laravel\Socialite\Facades\Socialite;
+use Auth;
 class RegisterController extends Controller
 {
     /*
@@ -39,9 +41,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        // $this->redirectTo = \URL::previous();
-
-        // \Session::put('url.intended',\URL::previous());
+        
     }
 
     /**
@@ -81,5 +81,32 @@ class RegisterController extends Controller
         $this->redirectTo = '/'; 
        
         return $user;
+    }
+
+    public function socialiteLogin()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        $googleData =  Socialite::driver('google')->user();
+
+        $user = User::where('email', $googleData->getEmail())->first();
+        if (! $user) {
+            // User doesn't exist, create a new user
+            $user = User::create([
+                'name' => $googleData->getName(),
+                'email' => $googleData->getEmail(),
+                'password' => Hash::make($googleUser->getName()),
+                'role_id'  => 0
+            ]);
+        }
+
+            // Log in the user
+            Auth::login($user);
+
+            // Redirect to the desired page
+        return redirect('/');
     }
 }

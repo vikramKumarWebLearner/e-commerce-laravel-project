@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\WhishlistController;
 use App\Http\Controllers\Frontend\UserDetailController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\RegisterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -158,3 +159,9 @@ Route::any('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('status', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+// Google Socilte login
+Route::get('/login/google', [RegisterController::class,'socialiteLogin'])->name('google.register');
+Route::get('/login/google/callback', [RegisterController::class,'handleGoogleCallback']);
+
