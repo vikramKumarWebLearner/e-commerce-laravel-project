@@ -36,7 +36,7 @@ class LoginController extends Controller
             return redirect('admin/dashboard')->with('message', 'Welcome to DashBoard');
         } else {
             
-            \App\Jobs\RegisterMailJob::dispatch('vikram.classiebit@gmail.com', 'vikram kumar');
+            
             return redirect('/')->with('status', 'Logged In Successfully');
             
         }

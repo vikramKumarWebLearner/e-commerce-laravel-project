@@ -85,8 +85,8 @@
                             <td style="padding:30px;background-color:#ffffff;">
                                 <h1
                                     style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">
-                                   {{ echo __('messages.welcome', ['username' => $username])}}</h1>
-                                
+                                    Welcome the funnda Application</h1>
+                                <p>{{ $username}}</p>
                             </td>
                         </tr>
                         

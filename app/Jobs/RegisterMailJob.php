@@ -37,6 +37,7 @@ class RegisterMailJob implements ShouldQueue
     public function handle()
     {
         try {
+            
             Mail::to($this->userMail)->send(new RegisterMail($this->userName));
         } catch (\Throwable $th) {
           dd($th);
