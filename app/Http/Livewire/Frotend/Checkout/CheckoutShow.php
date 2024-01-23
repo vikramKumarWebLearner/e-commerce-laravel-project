@@ -9,7 +9,7 @@ use Livewire\Component;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-
+use App\Services\RazorpayService;
 class CheckoutShow extends Component
 {
     public $carts;
@@ -29,6 +29,13 @@ class CheckoutShow extends Component
     public $payment_mode = null;
 
     public $payment_id = null;
+    public $razorpayservice;
+
+    public function __construct()
+    {
+       
+        // $this->razorpayservice = new RazorpayService;
+    }
 
     public function rules()
     {
@@ -44,6 +51,7 @@ class CheckoutShow extends Component
     public function placeOrder()
     {
         $this->validate();
+        dd($this->payment_mode);
         $order = Order::create([
             'user_id' => auth()->user()->id,
             'tracking_no' => 'funda-'.Str::random(10),
@@ -56,7 +64,7 @@ class CheckoutShow extends Component
             'payment_mode' => $this->payment_mode,
             'payment_id' => $this->payment_id,
         ]);
-
+        
         foreach ($this->carts as $cartItem) {
             $orderItem = OrderItem::create([
                 'order_id' => $order->id,
@@ -71,7 +79,9 @@ class CheckoutShow extends Component
                 $cartItem->product()->where('id', $cartItem->product_id)->decrement('quantity', $cartItem->quantity);
             }
         }
-
+            
+         $this->paymentGetyWayMethod($this->payment_mode);
+        
         return $order;
     }
 
@@ -87,6 +97,7 @@ class CheckoutShow extends Component
             try{
                 $order = Order::findOrfail($codOrder->id);
                 Mail::to("$order->email")->send(new OrderMail($order));
+                
             }
             catch(\Exception $e){
                 //error show
@@ -126,5 +137,10 @@ class CheckoutShow extends Component
         $this->totalAmount = $this->totalAmount();
 
         return view('livewire.frotend.checkout.checkout-show', ['totalAmount' => $this->totalAmount]);
+    }
+
+    protected function paymentGetyWayMethod($payment_mode= null)
+    {
+        dd($payment_mode);
     }
 }

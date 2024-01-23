@@ -96,7 +96,7 @@
                                                     <button type="button" wire:loading.attr="disabled"
                                                         wire:click="codOrder" class="btn btn-primary">
                                                         <span wire:loading.remove wire:target="codOrder">
-                                                            Place Order (Cash on Delivery)
+                                                             Place Order (Cash on Delivery)
                                                         </span>
                                                         <span wire:loading wire:target="codOrder">
                                                             Placeing Order (Cash on Delivery)
@@ -107,9 +107,30 @@
                                                 <div class="tab-pane fade" id="onlinePayment" role="tabpanel"
                                                     aria-labelledby="onlinePayment-tab" tabindex="0">
                                                     <h6>Online Payment Mode</h6>
+                                                     <div class="d-flex">
+                                                     <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="payapl" id="exampleRadios1" value="payapl" checked>
+                                                            <label class="form-check-label" for="exampleRadios1">
+                                                                PayPal
+                                                            </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="razopay" id="exampleRadios2" value="razopay">
+                                                            <label class="form-check-label" for="exampleRadios2">
+                                                               Razopay
+                                                            </label>
+                                                        </div>
+                                                     </div>
                                                     <hr />
-                                                    <a href="{{ url('process-transaction/' . $this->totalAmount) }}"
-                                                        class="btn btn-warning">Pay Now (Online Payment)</a>
+                                                    <button type="button" wire:loading.attr="disabled"
+                                                        wire:click="codOrder" class="btn btn-primary">
+                                                        <span wire:loading.remove wire:target="codOrder">
+                                                          Pay Now (Online Payment) 
+                                                        </span>
+                                                        <span wire:loading wire:target="codOrder">
+                                                            Pay Now (Online Payment)
+                                                        </span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
