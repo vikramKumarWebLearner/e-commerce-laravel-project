@@ -63,7 +63,9 @@
     <script>
         window.addEventListener('message', event => {
             alertify.set('notifier', 'position', 'top-right');
-            alertify.notify(event.detail.text, event.detail.type);
+            if(event.detail){
+                alertify.notify(event.detail.text, event.detail.type);
+            }
         })
     </script>
 

@@ -141,6 +141,6 @@ class CheckoutShow extends Component
 
     protected function paymentGetyWayMethod($payment_mode= null)
     {
-        dd($payment_mode);
+        // dd($payment_mode);
     }
 }
