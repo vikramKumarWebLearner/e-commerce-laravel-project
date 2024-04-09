@@ -70,11 +70,11 @@
                         </div>
                     </form>
 
-                       <div class="row mb-0 mt-4">
+                       <!-- <div class="row mb-0 mt-4">
                             <div class="col-md-6 offset-md-3 d-flex justify-content-around">
                                 <a href="{{ route('google.register') }}" class="btn btn-primary w-75">{{ __('message.google') }}</a>
                             </div>
-                        </div>
+                        </div> -->
                 </div>
             </div>
         </div>

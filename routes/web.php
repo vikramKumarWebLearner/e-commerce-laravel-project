@@ -33,7 +33,7 @@ use App\Http\Controllers\Auth\RegisterController;
 Auth::routes();
 
 Route::controller(FrontendController::class)->group(function() {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('home');
     Route::get('/collections', 'categories');
     Route::get('/collections/{category_slug}', 'products');
     Route::get('/collections/{category_slug}/{product_slug}', 'productView');
@@ -70,7 +70,7 @@ Route::get('/thank-you', [FrontendController::class, 'thankyou']);
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('/');
    
     Route::get('/setting',[SettingController::class,'index']);
     Route::post('/store',[SettingController::class,'store']);

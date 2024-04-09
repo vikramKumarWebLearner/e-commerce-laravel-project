@@ -8,6 +8,7 @@
 
                         <div class="cart-header d-none d-sm-none d-mb-block d-lg-block">
                             <div class="row">
+                                @if(!$whishlist->isEmpty())
                                 <div class="col-md-6">
                                     <h4>Products</h4>
                                 </div>
@@ -20,6 +21,7 @@
                                 <div class="col-md-2">
                                     <h4>Remove</h4>
                                 </div>
+                                @endif
                             </div>
                         </div>
 
@@ -69,11 +71,8 @@
                                 </div>
                             @endif
                         @empty
-                            <h4>No Data</h4>
+                            <h4 class="text-center">No Data !</h4>
                         @endforelse
-
-
-
                     </div>
                 </div>
             </div>
